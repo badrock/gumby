@@ -120,22 +120,26 @@ else
 	HETEROGENEOUS_OFFSET=false
 fi
 
-# @CONF_OPTION LEECHER_TIME: Time a leecher will remain running, 
+# @CONF_OPTION LEECHER_TIME: Time a leecher will remain running (optional), 
 # @CONF_OPTION LEECHER_TIME: set 1 value, for a heterogeneous network separate values by ,
 # @CONF_OPTION LEECHER_TIME: e.g. leecher_time="100s,200s" (note that the number of elements should then match the number of leechers)
-if [[ $LEECHER_TIME == *,* ]]
-then
-	# split in array
-	TIME=(`echo $LEECHER_TIME | tr ',' ' '`)
-	if [[ ${#TIME[@]} != $NO_OF_LEECHERS ]]
-	then
-		echo "No of offset settings should be equal to 1 or the number of leechers"
-		exit 65
-	fi
-	HETEROGENEOUS_TIME=true
+if [ ! -z "$LEECHER_TIME" ]; then
+    if [[ "$LEECHER_TIME" == *,* ]]; then
+        # split in array
+        TIME=(`echo $LEECHER_TIME | tr ',' ' '`)
+        if [[ ${#TIME[@]} != $NO_OF_LEECHERS ]]
+        then
+            echo "No of offset settings should be equal to 1 or the number of leechers"
+            exit 65
+        fi
+        HETEROGENEOUS_TIME=true
+    else
+        TIME=$LEECHER_TIME
+        HETEROGENEOUS_TIME=false
+    fi
 else
-	TIME=$LEECHER_TIME
-	HETEROGENEOUS_TIME=false
+    TIME=0
+    HETEROGENEOUS_TIME=false
 fi
 
 
