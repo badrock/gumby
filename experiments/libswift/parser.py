@@ -129,17 +129,25 @@ def check_single_experiment(inputDir, outputDir):
     else:
         print >> sys.stderr, "Missing seeder stderr log!!"
 
-    if os.path.exists( os.path.join(inputDir, 'dst', '111') ):
-        leechers = [d for d in os.listdir(os.path.join(inputDir, 'dst')) if os.path.isdir(d)]
-        if len(leechers) > 1:
-            # TODO multiple leechers
-            pass
-        else:
-            parse_stderr( os.path.join(inputDir, 'dst', '111'), outputDir, "leecher" )
-            parse_ledbat( os.path.join(inputDir, 'dst', '111'), outputDir, "leecher" )
-            parse_ledbat( os.path.join(inputDir, 'src'), outputDir, "seeder" )
+    if not os.path.exists( os.path.join(inputDir, 'dst') ):
+        print >> sys.stderr, "Missing leechers output dir!!"
+        return
+        
+    l_dir = os.path.exists( os.path.join(inputDir, 'dst') )
+    leechers = [ d for d in os.listdir( l_dir) if os.path.isdir(d) ]
+    
+    if len(leechers) < 1:
+        print >> sys.stderr, "Missing leechers output dir!!"
+        return    
+    
+    # check for 1 leecher 1 seeder scenario
+    if len(leechers) == 1:
+        parse_stderr( os.path.join(l_dir, '111'), outputDir, "leecher" )
+        parse_ledbat( os.path.join(l_dir, '111'), outputDir, "leecher" )
+        parse_ledbat( os.path.join(inputDir, 'src'), outputDir, "seeder" )
     else:
-        print >> sys.stderr, "Missing stderr log for first leecher!!"
+        for d in l_dir:
+            parse_stderr( os.path.join(l_dir, d), outputDir, "leecher_" + d )
 
 
 # checks the current dir structure 
@@ -152,7 +160,7 @@ def check_dir(inputDir, outputDir):
     # TODO multiple experiments aggregate
     else:
         print >> sys.stderr, "Multiple experiments"
-        pass
+
 
 
 if __name__ == "__main__":
