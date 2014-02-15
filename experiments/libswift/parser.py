@@ -133,8 +133,8 @@ def check_single_experiment(inputDir, outputDir):
         print >> sys.stderr, "Missing leechers output dir!!"
         return
         
-    l_dir = os.path.exists( os.path.join(inputDir, 'dst') )
-    leechers = [ d for d in os.listdir( l_dir) if os.path.isdir(d) ]
+    l_dir = os.path.join(inputDir, 'dst')
+    leechers = [ d for d in os.listdir( l_dir ) if os.path.isdir(os.path.join(l_dir,d)) ]
     
     if len(leechers) < 1:
         print >> sys.stderr, "Missing leechers output dir!!"
@@ -146,7 +146,7 @@ def check_single_experiment(inputDir, outputDir):
         parse_ledbat( os.path.join(l_dir, '111'), outputDir, "leecher" )
         parse_ledbat( os.path.join(inputDir, 'src'), outputDir, "seeder" )
     else:
-        for d in l_dir:
+        for d in leechers:
             parse_stderr( os.path.join(l_dir, d), outputDir, "leecher_" + d )
 
 
