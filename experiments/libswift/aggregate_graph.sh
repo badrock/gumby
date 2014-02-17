@@ -1,3 +1,15 @@
+#!/bin/bash
+# aggregate_graph
+#
+# Filename: aggregate_graph.sh
+# Description:
+# Author: Riccardo Petrocco
+# Maintainer:
+
+# Commentary:
+#
+# This script will extract the data from multiple experiments and ombine results in new graphs.
+#
 
 set -e
 
