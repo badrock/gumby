@@ -67,8 +67,8 @@ def check_dirs(inputDir, outputDir):
         print >> sys.stderr, "Please provide a good output directory"
         return
 
-    #if outputDir == inputDir and os.path.exists( os.path.join(outputDir,"output") ):
-    #    outputDir = os.path.join(outputDir,"output")
+    if outputDir == inputDir and os.path.exists( os.path.join(outputDir,"output") ):
+        outputDir = os.path.join(outputDir,"output")
         
     dirs = [ d for d in os.listdir(inputDir) if os.path.isdir( os.path.join(inputDir, d) ) and project_name.match(d) ]
     
