@@ -34,4 +34,5 @@ if [ -z "$R_SCRIPTS_TO_RUN" ]; then
     export R_SCRIPTS_TO_RUN="agg_downloadtime.r"
 fi
 
+graph_data.sh
 
