@@ -60,6 +60,7 @@ sudo /bin/mount -t aufs -o br=/tmp/container:/ none $CONTAINER_DIR
 sudo /bin/mount --bind /home $CONTAINER_DIR/home
 
 cd swift
-make
+make clean
+make -j6
 cd -
 #buildswift.sh
