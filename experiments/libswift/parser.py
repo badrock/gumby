@@ -95,7 +95,7 @@ def parse_ledbat(logDir, outputDir, clientName):
                 except:
                     proceed = False
 
-            if not proceed:
+            if not proceed or len(split) < 9:
                 continue
 
             time = int(split[0])/1000000.0
