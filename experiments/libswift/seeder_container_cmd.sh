@@ -41,7 +41,8 @@ RATE_UL=${RATE_UL[0]}
 BURST_UL=${RATE_UL[1]}
 
 # Ric remove existing fifo queues
-tc qdisc del dev eth0 root
+#tc qdisc del dev eth0 root
+tc qdisc show
 
 # ----------------- works
 # ingress traffic
