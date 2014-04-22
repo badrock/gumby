@@ -36,7 +36,7 @@ FILENAME=file_seed.tmp
 truncate -s $FILE_SIZE $OUTPUT_DIR/$FILENAME
 
 # make sure the leecher stopped
-sudo /usr/bin/lxc-stop -n seeder
+sudo /usr/bin/lxc-stop -n seeder 2>/dev/null
 
 # always remove the container in case it didn't shut down correctly
 # @CONF_OPTION CONTAINER_DIR: Directory to use for the lxc container (e.g., /tmp/debian-libswift) note the remark in README.MD concerning the sudoers file
