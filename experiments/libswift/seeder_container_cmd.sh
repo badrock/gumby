@@ -40,6 +40,9 @@ IFS='_' read -ra RATE_UL <<< "$NETEM_RATE_UL"
 RATE_UL=${RATE_UL[0]}
 BURST_UL=${RATE_UL[1]}
 
+# Ric remove existing fifo queues
+tc qdisc del dev eth0 root
+
 # ----------------- works
 # ingress traffic
 tc qdisc add dev eth0 handle ffff: ingress
