@@ -151,6 +151,7 @@ fi
 if [ ! -e $VENV/inst/lib/libevent.so ]; then
     pushd $VENV/src
     if [ ! -e libevent-*tar.gz ]; then
+        echo "downloading libevent"
         wget https://github.com/downloads/libevent/libevent/libevent-2.0.21-stable.tar.gz
     fi
     if [ ! -e libevent-*/ ]; then
@@ -161,6 +162,8 @@ if [ ! -e $VENV/inst/lib/libevent.so ]; then
     make -j$(grep process /proc/cpuinfo | wc -l)
     make install
     popd
+else
+    echo "libevent exists"
 fi
 
 if [ ! -e $VENV/bin/python ]; then
