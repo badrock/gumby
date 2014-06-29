@@ -3,10 +3,10 @@
 # %*% start_seeder.sh must be started first.
 
 
-EXPECTED_ARGS=16
+EXPECTED_ARGS=17
 if [ $# -ne $EXPECTED_ARGS ]
 then
-	echo "Usage: `basename $0` repository_dir dst_store hash netem_delay netem_packet_loss process_guard_cmd experiment_time bridge_ip seeder_port logs_dir username netem_rate netem_rate_ul iperf_test debug_swift debug_ledbat"
+	echo "Usage: `basename $0` repository_dir dst_store hash netem_delay netem_packet_loss process_guard_cmd experiment_time bridge_ip seeder_port logs_dir username netem_rate netem_rate_ul iperf_test debug_swift debug_ledbati piece_size"
 	exit 65
 fi
 
@@ -27,6 +27,7 @@ NETEM_RATE_UL="${13}"
 IPERF_TEST="${14}"
 DEBUG_SWIFT="${15}"
 DEBUG_LEDBAT="${16}"
+PIECE_SIZE="${17}"
 
 # fix formatting for random variation
 # @CONF_OPTION SEEDER_DELAY: Netem delay for the seeder.
@@ -72,7 +73,7 @@ then
 	iperf -s -w 64k -u -b 200M &
 else
 	# leech file
-	SWIFT_CMD="$REPOSITORY_DIR/swift -l 0.0.0.0:$SEEDER_PORT -f $LOGS_DIR/$FILENAME -p -H "
+	SWIFT_CMD="$REPOSITORY_DIR/swift -l 0.0.0.0:$SEEDER_PORT -f $LOGS_DIR/$FILENAME -p -H -z $PIECE_SIZE"
 	if $DEBUG_SWIFT; then
 		SWIFT_CMD="$SWIFT_CMD -D $LOGS_DIR/src/seeder "
 	fi

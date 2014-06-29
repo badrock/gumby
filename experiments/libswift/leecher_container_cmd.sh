@@ -3,10 +3,10 @@
 # %*% start_seeder.sh must be started first.
 
 
-EXPECTED_ARGS=19
+EXPECTED_ARGS=20
 if [ $# -ne $EXPECTED_ARGS ]
 then
-	echo "Usage: `basename $0` repository_dir dst_store hash netem_delay netem_packet_loss process_guard_cmd experiment_time bridge_ip seeder_ip seeder_port logs_dir leecher_id username rate_dl rate_ul iperf_test time debug_swift debug_ledbat"
+	echo "Usage: `basename $0` repository_dir dst_store hash netem_delay netem_packet_loss process_guard_cmd experiment_time bridge_ip seeder_ip seeder_port logs_dir leecher_id username rate_dl rate_ul iperf_test time debug_swift debug_ledbat piece_size"
 	exit 65
 fi
 
@@ -30,6 +30,7 @@ IPERF_TEST="${16}"
 TIME="${17}"
 DEBUG_SWIFT="${18}"
 DEBUG_LEDBAT="${19}"
+PIECE_SIZE="${20}"
 
 # fix formatting for random variation
 NETEM_DELAY=${NETEM_DELAY/'_'/' '}
@@ -65,7 +66,7 @@ then
 	iperf -c 192.168.1.110 -r -w 64k -M 2000 -u -b 200M
 else
 	# leech file
-	SWIFT_CMD="$REPOSITORY_DIR/swift -t $SEEDER_IP:$SEEDER_PORT -o $LOGS_DIR/dst/$LEECHER_ID -h $HASH -p "
+	SWIFT_CMD="$REPOSITORY_DIR/swift -t $SEEDER_IP:$SEEDER_PORT -o $LOGS_DIR/dst/$LEECHER_ID -h $HASH -p -z $PIECE_SIZE"
 	# add optional parameters iff set
 	if [ "$TIME" -ne 0 ]; then
 		SWIFT_CMD="$SWIFT_CMD -w $TIME"
